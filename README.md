@@ -1,3 +1,4 @@
+-- Active: 1750151033462@@127.0.0.1@5432@tontrix
 # ENTITY-RELATIONSHIP DIAGRAM FOR TONTRIX (CINEMA TICKET BOOKING WEBAPP)
 
 ```mermaid
@@ -8,11 +9,12 @@ users ||--o{ sessions : has
 users ||--o{ tickets : books
 movies ||--o{ movie_genres : has
 genres ||--o{ movie_genres : categorized_as
-tickets ||--|| movies : for_movie
-tickets ||--|| cinemas : at
-tickets ||--o{ ticket_seats : includes
+tickets ||--|{ movies : for
 
-cinemas ||--|| locations : located_in
+tickets ||--|{ ticket_seats : includes
+
+cinemas ||--|{ ticket_seats : has
+locations ||--|{ cinemas : has
 
 users {
   varchar id PK
@@ -64,7 +66,9 @@ tickets {
 }
 
 ticket_seats {
+  varchar id_ticket_seat PK
   varchar id_ticket FK
+  varchar id_cinema FK
   string seat_code
 }
 
