@@ -79,3 +79,17 @@ INSERT INTO tickets (id_user, id_movie, show_date, show_time, cinema, location, 
 (3, 3, '2025-06-27', '18:30', 'CGV', 'Surabaya', 'C3', 60000, 3),
 (4, 4, '2025-06-28', '20:00', 'XXI', 'Yogyakarta', 'D4', 65000, 4),
 (5, 5, '2025-06-29', '21:00', 'Cinepolis', 'Semarang', 'E5', 70000, 5);
+
+INSERT INTO tickets (id_user, id_movie, show_date, show_time, cinema, location, seat, price_per_ticket, payment_method) VALUES
+(1, 2, '2025-07-01', '17:30', 'CGV', 'Jakarta', 'A2', 55000, 2),
+(1, 3, '2025-07-02', '18:00', 'XXI', 'Jakarta', 'A3', 60000, 3),
+(2, 3, '2025-07-03', '20:00', 'Cinepolis', 'Bandung', 'B3', 60000, 1),
+(3, 4, '2025-07-04', '19:00', 'XXI', 'Surabaya', 'C4', 65000, 2),
+(4, 1, '2025-07-05', '16:00', 'CGV', 'Yogyakarta', 'D1', 50000, 4),
+(5, 2, '2025-07-06', '20:30', 'CGV', 'Semarang', 'E2', 55000, 5),
+(1, 5, '2025-07-07', '21:00', 'XXI', 'Jakarta', 'F5', 70000, 1),
+(2, 4, '2025-07-08', '18:30', 'Cinepolis', 'Bandung', 'B4', 65000, 3),
+(3, 5, '2025-07-09', '17:15', 'CGV', 'Surabaya', 'C5', 70000, 2),
+(4, 3, '2025-07-10', '19:45', 'XXI', 'Yogyakarta', 'D6', 60000, 4);
+
+
