@@ -7,14 +7,15 @@ direction LR
 
 users ||--o{ sessions : has
 users ||--o{ tickets : books
-movies ||--o{ movie_genres : has
-genres ||--o{ movie_genres : categorized_as
-tickets ||--|{ movies : for
+movies ||--o{ tickets : has
+genres ||--o{ movie_genres : categorize
+movie_genres }o--|| movies : has
+directors ||--o{ movie_directors : directs
+movie_directors }o--|| movies : has
+actors ||--o{ movie_casts : plays
+movie_casts }o--|| movies : has
+tickets }o--|| payment_method : used
 
-tickets ||--|{ ticket_seats : includes
-
-cinemas ||--|{ ticket_seats : has
-locations ||--|{ cinemas : has
 
 users {
   varchar id PK
@@ -29,15 +30,12 @@ sessions {
   varchar id PK
   varchar id_user FK
   timestamp login_time
-  timestamp logout_time
 }
 
 movies {
   varchar id PK
   varchar title
-  varchar director
   text description
-  varchar cast
   date release_date
   int duration_minutes
   varchar image
@@ -50,8 +48,32 @@ genres {
 }
 
 movie_genres {
+  varchar id PK
   varchar id_movie FK
   varchar id_genre FK
+}
+
+directors {
+  varchar id PK
+  varchar director_name
+}
+
+movie_directors {
+  varchar id PK
+  varchar id_movie FK
+  varchar id_director FK
+}
+
+actors {
+  varchar id PK
+  varchar actor_name
+}
+
+movie_casts {
+  varchar id PK
+  varchar id_movie FK
+  varchar id_actor FK
+  varchar role_name
 }
 
 tickets {
@@ -60,27 +82,17 @@ tickets {
   varchar id_movie FK
   date show_date
   time show_time
-  varchar id_cinema FK
+  varchar cinema
+  varchar location
+  varchar seat
   int price_per_ticket
-  varchar payment_method
+  varchar payment_method FK
 }
 
-ticket_seats {
-  varchar id_ticket_seat PK
-  varchar id_ticket FK
-  varchar id_cinema FK
-  string seat_code
-}
 
-locations {
+payment_method {
   varchar id PK
-  varchar location_name
-}
-
-cinemas {
-  varchar id PK
-  varchar cinema_name
-  varchar id_location FK
+  varchar payment_name
 }
 
 
