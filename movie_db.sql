@@ -90,5 +90,6 @@ CREATE TABLE payment_method (
 ALTER TABLE tickets
 ADD payment_method INT REFERENCES payment_method(id);
 
-
+ALTER TABLE movie_casts
+ADD COLUMN role_name VARCHAR(255);
 
