@@ -1,78 +1,94 @@
--- Active: 1750151033462@@127.0.0.1@5432
-CREATE DATABASE tontrix;
+-- Active: 1750573676721@@127.0.0.1@5433@tontrix_db
+CREATE DATABASE tontrix_db;
 
 -- USERS
 CREATE TABLE users (
-  id VARCHAR PRIMARY KEY,
-  email VARCHAR NOT NULL UNIQUE,
-  password VARCHAR NOT NULL,
-  full_name VARCHAR NOT NULL,
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
   phone_number BIGINT,
-  profile_picture VARCHAR
+  profile_picture VARCHAR(255)
 );
 
 -- SESSIONS
 CREATE TABLE sessions (
-  id VARCHAR PRIMARY KEY,
-  id_user VARCHAR REFERENCES users(id),
-  login_time TIMESTAMP,
-  logout_time TIMESTAMP
+  id SERIAL PRIMARY KEY,
+  id_user INT REFERENCES users(id),
+  login_time TIMESTAMP
 );
 
 -- MOVIES
 CREATE TABLE movies (
-  id VARCHAR PRIMARY KEY,
-  title VARCHAR NOT NULL,
-  director VARCHAR,
-  description TEXT,
-  cast VARCHAR,
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description VARCHAR(255),
   release_date DATE,
   duration_minutes INT,
-  image VARCHAR,
-  horizontal_image VARCHAR
+  image VARCHAR(255),
+  horizontal_image VARCHAR(255)
 );
 
 -- GENRES
 CREATE TABLE genres (
-  id VARCHAR PRIMARY KEY,
-  genre_name VARCHAR NOT NULL
+  id SERIAL PRIMARY KEY,
+  genre_name VARCHAR(255) NOT NULL
 );
 
 -- MOVIE_GENRES (Many-to-Many)
 CREATE TABLE movie_genres (
-  id_movie VARCHAR REFERENCES movies(id) ON DELETE CASCADE,
-  id_genre VARCHAR REFERENCES genres(id) ON DELETE CASCADE,
-  PRIMARY KEY (id_movie, id_genre)
+  id SERIAL PRIMARY KEY,
+  id_movie INT REFERENCES movies(id) ON DELETE CASCADE,
+  id_genre INT REFERENCES genres(id) ON DELETE CASCADE
 );
 
--- LOCATIONS
-CREATE TABLE locations (
-  id VARCHAR PRIMARY KEY,
-  location_name VARCHAR NOT NULL
+-- DIRECTORS
+CREATE TABLE directors (
+  id SERIAL PRIMARY KEY,
+  director_name VARCHAR(255) NOT NULL
 );
 
--- CINEMAS
-CREATE TABLE cinemas (
-  id VARCHAR PRIMARY KEY,
-  cinema_name VARCHAR NOT NULL,
-  id_location VARCHAR REFERENCES locations(id)
+-- MOVIE_DIRECTORS
+CREATE TABLE movie_directors (
+  id SERIAL PRIMARY KEY,
+  id_movie INT REFERENCES movies(id) ON DELETE CASCADE,
+  id_director INT REFERENCES directors(id) ON DELETE CASCADE
+);
+
+-- ACTORS
+CREATE TABLE actors (
+  id SERIAL PRIMARY KEY,
+  actor_name VARCHAR(255)
+);
+
+-- MOVIE_CASTS
+CREATE TABLE movie_casts (
+  id SERIAL PRIMARY KEY,
+  id_movie INT REFERENCES movies(id) ON DELETE CASCADE,
+  id_actor INT REFERENCES actors(id) ON DELETE CASCADE
 );
 
 -- TICKETS
 CREATE TABLE tickets (
-  id VARCHAR PRIMARY KEY,
-  id_user VARCHAR REFERENCES users(id) ON DELETE CASCADE,
-  id_movie VARCHAR REFERENCES movies(id),
+  id SERIAL PRIMARY KEY,
+  id_user INT REFERENCES users(id),
+  id_movie INT REFERENCES movies(id),
   show_date DATE,
   show_time TIME,
-  id_cinema VARCHAR REFERENCES cinemas(id),
-  price_per_ticket INT,
-  payment_method VARCHAR
+  cinema VARCHAR(255),
+  location VARCHAR(255),
+  seat VARCHAR(255),
+  price_per_ticket INT
 );
 
--- TICKET_SEATS
-CREATE TABLE ticket_seats (
-  id_ticket VARCHAR REFERENCES tickets(id) ON DELETE CASCADE,
-  seat_code VARCHAR,
-  PRIMARY KEY (id_ticket, seat_code)
+-- PAYMENT_METHOD
+CREATE TABLE payment_method (
+  id SERIAL PRIMARY KEY,
+  payment_name VARCHAR(255)
 );
+
+ALTER TABLE tickets
+ADD payment_method INT REFERENCES payment_method(id);
+
+
+
